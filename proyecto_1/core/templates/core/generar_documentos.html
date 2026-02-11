@@ -1,0 +1,19 @@
+<h2>Generar documentos del proyecto</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit">
+        Generar documentos
+    </button>
+</form>
+
+{% if pdf_generado %}
+    <hr>
+    <p>Documento generado correctamente ✅</p>
+
+    <a href="{{ pdf_generado.url }}" target="_blank">
+        Descargar PDF
+    </a>
+{% endif %}

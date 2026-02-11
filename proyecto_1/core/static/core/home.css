@@ -1,0 +1,30 @@
+.user{
+    color: #000000;
+
+}
+.contenedor_login{
+    display: flex;
+    justify-content: center; /* horizontal */
+    align-items: center;      /* vertical */
+    height: 100vh; 
+}
+.user_continer{
+    width: 90vw;
+    height: auto;
+    background: #ba3232;
+    border-radius: 5px;
+    border: #000000 2px solid;
+    background-color: rgb(255, 255, 255);
+}
+
+.user_continer span{
+    background-color: #5d5d5e;
+}
+
+.celda_user input{ 
+    background-color: #c2c2c6;
+}
+
+.celda_user{
+    margin: 15px;
+}

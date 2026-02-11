@@ -1,0 +1,117 @@
+	Usuario
+
+Se autentica
+
+Tiene permisos (normal / master)
+
+Puede generar documentos
+
+	Proyecto
+
+Tiene reglas
+
+Define qué datos son requeridos
+
+Se asocia a plantillas
+
+Es administrado por usuarios con permisos
+
+	Regla (o Configuración de Proyecto)
+
+Pertenece a un proyecto
+
+Define:
+
+qué campos aplicar
+
+qué plantillas usar
+
+
+	Persona
+
+Representa a la persona diligenciada
+
+Sus datos vienen del formulario
+
+Se usa para generar documentos
+
+	Plantilla
+
+Pertenece a un proyecto
+
+Representa un archivo Excel base
+
+No guarda datos de personas
+
+	Documento
+
+Se genera para una persona
+
+Usa una o varias plantillas
+
+Pertenece a un proyecto
+
+Guarda referencia al PDF generado
+
+/////////////////////////////////
+
+Usuario → genera → Documento
+
+Proyecto → tiene → Reglas
+
+Proyecto → tiene → Plantillas
+
+Documento → usa → Plantillas
+
+Documento → pertenece → Proyecto
+
+Documento → pertenece → Persona
+
+////////////////////////////////
+
+Usuario tiene permisos
+
+Proyecto tiene muchas plantillas
+
+Proyecto tiene muchos documentos
+
+Documento pertenece a un proyecto
+
+Documento pertenece a una persona
+
+Persona contiene los datos diligenciados en el formulario
+
+Documento usa plantillas para generar un PDF
+
+/////////////////////////////////////////
+
+Usuario
+  └─ rol
+
+Proyecto
+  └─ reglas (booleanas)
+
+Plantilla
+  └─ archivo base
+
+Persona
+  └─ datos
+
+Documento
+  ├─ pertenece a Persona
+  ├─ pertenece a Proyecto
+  └─ usa una Plantilla
+  
+
+  ////////////////////////////////////////////
+
+Usuario → permisos (uno a muchos)
+
+proyectos → plantillas (mucho a muchos)
+
+proyectos → Documentos (mucho a muchos)
+
+Documento → Persona (muchos a uno)
+
+Documento → Plantilla (uno a muchos)
+
