@@ -17,6 +17,8 @@ def generar_documentos_view(request):
 
             datos = {
                 "{{ nombre }}": persona.nombre_persona,
+                "{{ tipo_id }}": persona.tipo_identificacion,
+                "{{ numero_id }}": persona.numero_identificacion,
             }
 
             pdf_final = generar_documentos_proyecto(
