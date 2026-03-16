@@ -5,21 +5,17 @@ from datetime import datetime
 
 #generador del nombre del archivo
 
-def generar_nombre_excel(persona, tipo_documento):
+def generar_nombre_excel(numero_id):
     """
     Genera un nombre único para el documento
     """
+
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
-    return (
-        f"{tipo_documento}_"
-        f"{persona.tipo_identificacion}_"
-        f"{persona.numero_identificacion}_"
-        f"{timestamp}.xlsx"
-    )
+    return f"excel_{numero_id}_{timestamp}.xlsx"
 
 
-def generar_excel_desde_plantilla(plantilla, datos, persona, tipo_documento):
+def generar_excel_desde_plantilla(plantilla, datos, numero_id, usuario):
 
     ruta_plantilla = Path(settings.MEDIA_ROOT) / plantilla.archivo.name
     wb = load_workbook(ruta_plantilla)
@@ -40,10 +36,10 @@ def generar_excel_desde_plantilla(plantilla, datos, persona, tipo_documento):
                     cell.value = texto
 
     # carpeta salida
-    salida_dir = Path(settings.MEDIA_ROOT) / "documentos_generados"
-    salida_dir.mkdir(exist_ok=True)
+    salida_dir = Path(settings.MEDIA_ROOT) / "documentos_generados" / usuario
+    salida_dir.mkdir(parents=True, exist_ok=True)
 
-    nombre_excel = generar_nombre_excel(persona, tipo_documento)
+    nombre_excel = generar_nombre_excel(numero_id)
     ruta_salida = salida_dir / nombre_excel
 
     wb.save(ruta_salida)

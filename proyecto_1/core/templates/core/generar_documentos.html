@@ -1,19 +1,57 @@
-<h2>Generar documentos del proyecto</h2>
+{% extends 'core/base.html' %}
+{% load static %}
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
+{% block title %}Generar Documentos | DocGenerator{% endblock %}
 
-    <button type="submit">
-        Generar documentos
-    </button>
-</form>
+{% block content %}
+<div class="glass-card">
+    <h2 class="card-title">Generar Documentos</h2>
+    <p class="text-center" style="color: var(--text-muted); margin-top: -1.5rem; margin-bottom: 2rem;">
+        Introduce los datos para automatizar los documentos del proyecto.
+    </p>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.help_text %}
+                    <span class="helptext">{{ field.help_text }}</span>
+                {% endif %}
+                {% if field.errors %}
+                    <div style="color: var(--danger); font-size: 0.875rem; margin-top: 0.25rem;">
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
 
-{% if pdf_generado %}
-    <hr>
-    <p>Documento generado correctamente ✅</p>
+        <button type="submit" class="btn btn-primary mt-4">
+            Generar Todos los Documentos
+        </button>
+    </form>
 
-    <a href="{{ pdf_generado.url }}" target="_blank">
-        Descargar PDF
-    </a>
-{% endif %}
+    {% if pdf_generado %}
+        <div class="success-card">
+            <p>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                ¡Documentos generados y combinados con éxito!
+            </p>
+            
+            <a href="{{ pdf_generado.url }}" target="_blank" class="btn btn-success mt-4">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Descargar Documento Maestro (PDF)
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

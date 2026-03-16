@@ -1,24 +1,21 @@
 from docx import Document
+
 from pathlib import Path
 from django.conf import settings
 from datetime import datetime
 
 
-def generar_nombre_documento(persona, tipo_documento):
+def generar_nombre_documento(numero_id):
     """
     Genera un nombre único para el documento
     """
+
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
-    return (
-        f"{tipo_documento}_"
-        f"{persona.tipo_identificacion}_"
-        f"{persona.numero_identificacion}_"
-        f"{timestamp}.docx"
-    )
+    return f"word_{numero_id}_{timestamp}.docx"
 
 
-def generar_word_desde_plantilla(plantilla, datos, persona, tipo_documento):
+def generar_word_desde_plantilla(plantilla, datos, numero_id, usuario):
     """
     Genera un documento Word a partir de una plantilla
     """
@@ -43,11 +40,11 @@ def generar_word_desde_plantilla(plantilla, datos, persona, tipo_documento):
                             p.text = p.text.replace(key, str(value))
 
     # Carpeta de salida
-    salida_dir = Path(settings.MEDIA_ROOT) / "documentos_generados"
-    salida_dir.mkdir(exist_ok=True)
+    salida_dir = Path(settings.MEDIA_ROOT) / "documentos_generados" / usuario
+    salida_dir.mkdir(parents=True, exist_ok=True)
 
     # Nombre automático
-    nombre_archivo = generar_nombre_documento(persona, tipo_documento)
+    nombre_archivo = generar_nombre_documento(numero_id)
     ruta_salida = salida_dir / nombre_archivo
 
     doc.save(ruta_salida)

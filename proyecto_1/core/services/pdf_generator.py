@@ -46,12 +46,14 @@ def convertir_a_pdf(ruta_archivo):
 
     perfil_temp = tempfile.mkdtemp()
 
+    perfil_uri = Path(perfil_temp).as_uri()
+
     cmd = [
         SOFFICE_PATH,
         "--headless",
         "--nologo",
         "--nofirststartwizard",
-        f"-env:UserInstallation=file:///{perfil_temp.replace(os.sep, '/')}",
+        f"-env:UserInstallation={perfil_uri}",
         "--convert-to",
         "pdf",
         str(ruta_archivo),
@@ -62,12 +64,15 @@ def convertir_a_pdf(ruta_archivo):
     resultado = subprocess.run(
         cmd,
         capture_output=True,
-        text=True
+        text=True,
+        timeout=30
     )
 
     if resultado.returncode != 0:
         print("STDOUT:", resultado.stdout)
         print("STDERR:", resultado.stderr)
         raise Exception("Error convirtiendo a PDF con LibreOffice")
+    
+    shutil.rmtree(perfil_temp, ignore_errors=True)
 
     return ruta_archivo.with_suffix(".pdf")

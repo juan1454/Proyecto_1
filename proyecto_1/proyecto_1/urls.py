@@ -19,12 +19,10 @@ from django.urls import path
 from django.urls import include
 from django.shortcuts import redirect
 
-def home(request):
-    return redirect('generar_documentos')
-
 urlpatterns = [
-    path('', home),
+    path('', include('core.urls')),
     path('admin/', admin.site.urls),
-    path('core/', include('core.urls')),
+
+
 ]
 

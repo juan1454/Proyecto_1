@@ -1,0 +1,56 @@
+.barra_navegacion{
+    height: 10%;
+    width: auto;
+    background-color:rgba(31, 31, 143, 0.9);
+    font-size: larger;
+    border-radius: 0 0px 20px 20px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.main_title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #ffff;
+}
+
+.barra_navegacion a {
+
+    display: flex;              /* importante */
+    align-items: center;        /* centra vertical */
+    justify-content: center;    /* centra horizontal */
+    width: 120px;               /* tamaño del botón */
+    height: 45px;
+
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.barra_navegacion a:hover {
+    background-color: #555;
+}
+
+head{
+    margin: 0%;
+}
+body{
+    margin: 0%;
+}
+section{
+    max-width: 1200px;
+    margin: 10px auto;
+    padding: 40px;
+    min-height: 50px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    width: 75%;
+}
