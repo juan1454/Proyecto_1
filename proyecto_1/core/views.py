@@ -1,7 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.http import FileResponse
+from django.contrib import messages
 from pathlib import Path
+import subprocess
 
 from .forms import GenerarDocumentosForm
 from .services.document_service import generar_documentos_proyecto
@@ -23,24 +25,32 @@ def generar_documentos_view(request):
                 "{{ nombre }}": nombre,
                 "{{ tipo_id }}": tipo_id,
                 "{{ numero_id }}": numero_id,
+                "{{ cargo }}": cargo.nombre,
             }
 
             usuario = str(request.user.id)
             
-            pdf_final = generar_documentos_proyecto(
-                numero_id=numero_id,
-                proyecto=proyecto,
-                cargo=cargo,
-                datos=datos,
-                usuario=usuario
-            )
+            try:
+                pdf_final = generar_documentos_proyecto(
+                    numero_id=numero_id,
+                    proyecto=proyecto,
+                    cargo=cargo,
+                    datos=datos,
+                    usuario=usuario
+                )
 
-            return FileResponse(
-                open(pdf_final, "rb"),
-                as_attachment=True,
-                filename=Path(pdf_final).name,
-                content_type="application/pdf"
-            )
+                return FileResponse(
+                    open(pdf_final, "rb"),
+                    as_attachment=True,
+                    filename=Path(pdf_final).name,
+                    content_type="application/pdf"
+                )
+            except subprocess.TimeoutExpired:
+                messages.error(request, "La generación de documentos tardó demasiado tiempo y fue cancelada. Por favor, intenta de nuevo.")
+            except Exception as e:
+                import logging
+                logging.getLogger(__name__).error("Error al generar documentos", exc_info=True)
+                messages.error(request, "Hubo un problema procesando los documentos (es posible que LibreOffice esté saturado). Por favor intenta más tarde.")
 
     else:
         form = GenerarDocumentosForm()

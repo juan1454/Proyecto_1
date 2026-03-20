@@ -1,0 +1,28 @@
+# Django
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Entornos virtuales
+venv/
+env/
+.env/
+env.bak/
+venv.bak/
+
+# Carpeta Media General (si la quieres ignorar toda excepto lo básico)
+# En este proyecto preservamos media/plantillas/ y media/documentos_generados/ 
+# gracias a los .gitignore internos, pero evitamos subir otras cosas sueltas de media/
+media/*
+!media/plantillas/
+!media/documentos_generados/
+
+# Entorno de desarrollo / IDEs
+.vscode/
+.idea/
+*.swp
+*.sqlite3
